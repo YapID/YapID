@@ -1,7 +1,7 @@
 {
   "name": "yapid-server",
   "version": "1.0.0",
-  "description": "YapID — Anonymous persistent identity service for yaphub.xyz",
+  "description": "YapID — Anonymous persistent identity service",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
