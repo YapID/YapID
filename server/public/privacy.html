@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Privacy Policy — YapID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--bg2:#101010;--bg3:#181818;--border:#1e1e1e;--border2:#2a2a2a;--text:#f0f0f0;--text2:#888;--text3:#444;--purple3:#a78bfa;--green:#22c55e;--mono:'Space Mono',monospace;--sans:'Bricolage Grotesque',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);padding:24px}
+header{display:flex;align-items:center;justify-content:space-between;max-width:800px;margin:0 auto 48px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo img{width:36px;height:36px;object-fit:contain}
+.hdr-link{font-family:var(--mono);font-size:10px;color:var(--text3);text-decoration:none}
+.hdr-link:hover{color:var(--text2)}
+.doc{max-width:800px;margin:0 auto}
+.doc-header{margin-bottom:48px}
+.doc-header h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.03em;color:#fff;margin-bottom:8px}
+.meta{font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.8}
+.privacy-score{background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(109,40,217,.04));border:1px solid rgba(124,58,237,.2);border-radius:10px;padding:20px 24px;margin-bottom:40px;display:flex;align-items:center;gap:20px}
+.score-big{font-family:var(--mono);font-size:48px;font-weight:700;color:var(--purple3);line-height:1}
+.score-info h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.score-info p{font-size:12px;color:var(--text2);line-height:1.6}
+section{margin-bottom:40px;scroll-margin-top:24px}
+section h2{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+section h3{font-size:14px;font-weight:700;color:#fff;margin:18px 0 8px;font-family:var(--mono)}
+section p{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:10px}
+section ul{padding-left:20px;margin-bottom:10px;display:flex;flex-direction:column;gap:6px}
+section li{font-size:14px;color:var(--text2);line-height:1.7}
+section strong{color:var(--text)}
+section a{color:var(--purple3);text-decoration:none}
+.green-box{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.15);border-radius:8px;padding:16px 20px;margin:14px 0}
+.green-box p{margin-bottom:0;color:var(--text2)}
+.green-box strong{color:var(--green)}
+.data-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.data-table th{background:var(--bg3);color:var(--text);font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border2)}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.yes{color:var(--green)}.no{color:#ef4444}
+footer{max-width:800px;margin:48px auto 0;padding-top:24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+footer a{color:var(--text3);text-decoration:none}
+footer a:hover{color:var(--text2)}
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo"><img src="/yapid.png" alt="YapID"></a>
+  <a href="/" class="hdr-link">← Home</a>
+</header>
+
+<div class="doc">
+  <div class="doc-header">
+    <h1>Privacy Policy</h1>
+    <div class="meta">Last updated: April 4, 2026 &nbsp;·&nbsp; Effective: April 4, 2026 &nbsp;·&nbsp; Version: 1.0</div>
+  </div>
+
+  <div class="privacy-score">
+    <div class="score-big">93%</div>
+    <div class="score-info">
+      <h3>Privacy Score — Independently calculated</h3>
+      <p>YapID achieves a 93% privacy score across 7 criteria including data minimization, IP handling, identity linkability, session encryption, third-party exposure, tracking prevention, and replay protection. This is the highest score of any authentication service we are aware of.</p>
+    </div>
+  </div>
+
+  <section id="overview">
+    <h2>Overview</h2>
+    <div class="green-box">
+      <p><strong>The short version:</strong> We store almost nothing about you. No email, no IP address, no name, no tracking. Only a cryptographic hash that proves you own your 12 words — without revealing who you are.</p>
+    </div>
+    <p>This Privacy Policy explains what data YapID ("we", "us", "our") collects, why we collect it, and how it is used. We operate <strong>id.yaphub.xyz</strong> and related services.</p>
+    <p>YapID is designed from the ground up to collect the absolute minimum data necessary to function. Privacy is not a feature we added — it is the foundation of everything we built.</p>
+  </section>
+
+  <section id="what-we-collect">
+    <h2>What We Collect</h2>
+    <table class="data-table">
+      <thead><tr><th>Data</th><th>Collected</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>SHA-256 hash of your public key</td><td><span class="yes">Yes</span></td><td>Identify your account without storing your actual key</td></tr>
+        <tr><td>Session identifiers</td><td><span class="yes">Yes</span></td><td>Maintain login sessions</td></tr>
+        <tr><td>Session timestamps</td><td><span class="yes">Yes</span></td><td>Session expiry and security</td></tr>
+        <tr><td>Refresh token identifiers</td><td><span class="yes">Yes</span></td><td>Token rotation security</td></tr>
+        <tr><td>One-time nullifiers</td><td><span class="yes">Yes</span></td><td>Prevent replay attacks</td></tr>
+        <tr><td>Premium status</td><td><span class="yes">Yes</span></td><td>Link YAP Premium subscription</td></tr>
+        <tr><td>Email address</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>IP address</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>Name or username</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>Device fingerprint</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>Location data</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>Browser/OS information</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>Your 12-word passphrase</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>Your private key</td><td><span class="no">Never</span></td><td>—</td></tr>
+        <tr><td>Cookies</td><td><span class="no">Never</span></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="how-it-works">
+    <h2>How Your Identity Works</h2>
+    <p>Your 12-word passphrase never leaves your browser. Here is exactly what happens:</p>
+    <ol style="padding-left:20px;display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+      <li style="font-size:14px;color:var(--text2);line-height:1.7">Your browser derives an Ed25519 keypair from your 12 words using PBKDF2 (210,000 iterations)</li>
+      <li style="font-size:14px;color:var(--text2);line-height:1.7">Your browser signs a one-time challenge message using your private key</li>
+      <li style="font-size:14px;color:var(--text2);line-height:1.7">Only the signature and your public key are sent to our server</li>
+      <li style="font-size:14px;color:var(--text2);line-height:1.7">Our server verifies the signature and stores only SHA-256(publicKey + salt)</li>
+      <li style="font-size:14px;color:var(--text2);line-height:1.7">This hash cannot be reversed to reveal your public key or passphrase</li>
+    </ol>
+    <p><strong>Result:</strong> Even if our entire database were stolen, an attacker would have no way to link any account to a real person, and no way to recover any 12-word passphrase.</p>
+
+    <h3>Session Storage (Client-Side)</h3>
+    <p>Your session token is stored encrypted in your browser's IndexedDB using AES-256-GCM with a non-extractable cryptographic key. This means the token cannot be read even if an attacker executes JavaScript on a page that embeds YapID — because the decryption key never leaves the WebCrypto API's secure context.</p>
+  </section>
+
+  <section id="third-parties">
+    <h2>What Third-Party Sites Receive</h2>
+    <p>When you sign in to a website using YapID, that website receives only:</p>
+    <ul>
+      <li><strong>accountId</strong> — a random UUID (e.g., <code style="font-family:var(--mono);font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px">5ea84ef5-0210-4eb9-9350-7cd3dd60a748</code>). This is not linked to any personal information.</li>
+      <li><strong>isPremium</strong> — a boolean indicating whether you have an active YAP Premium subscription</li>
+    </ul>
+    <p>Third-party sites do <strong>not</strong> receive: your name, email, avatar, IP address, passphrase, public key, or any other identifying information.</p>
+    <p>Different websites that use YapID each see the same accountId for a given user. This is necessary for persistent identity. However, because the accountId is a random UUID with no link to any real-world identity, this does not constitute a privacy risk unless a user voluntarily identifies themselves to those websites.</p>
+  </section>
+
+  <section id="data-retention">
+    <h2>Data Retention</h2>
+    <p>We retain data only as long as necessary:</p>
+    <ul>
+      <li><strong>Account hash:</strong> Retained indefinitely (as long as the account exists)</li>
+      <li><strong>Active sessions:</strong> Until expiry (maximum 1 year) or manual logout</li>
+      <li><strong>Refresh tokens:</strong> Until expiry or revocation. Revoked tokens are deleted in hourly cleanup jobs</li>
+      <li><strong>Nullifiers:</strong> Deleted after 7 days</li>
+      <li><strong>Login notifications:</strong> Deleted after 30 days</li>
+    </ul>
+    <p>Database backups are taken every 6 hours and retained for 7 days, then permanently deleted.</p>
+  </section>
+
+  <section id="your-rights">
+    <h2>Your Rights</h2>
+    <h3>GDPR</h3>
+    <p>Because we store no personal data as defined by GDPR, most GDPR rights (right to access, right to erasure, etc.) do not technically apply — there is no personal data to access or erase.</p>
+    <p>However, if you wish to remove all trace of your account from our systems, you can use the "Logout from all devices" feature at <a href="/profile">id.yaphub.xyz/profile</a>. This will invalidate all your sessions. Your account hash will remain in the database but is not linked to any personal information.</p>
+    <p>For complete account deletion requests, contact us at <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7">Support Chat</a>. We will delete the account hash, effectively making the account unrecoverable.</p>
+
+    <h3>Right to Information</h3>
+    <p>Our full source code is available at <a href="https://github.com/YapID" target="_blank" rel="noopener">github.com/YapID</a>. You can verify every claim in this Privacy Policy by reading the code.</p>
+  </section>
+
+  <section id="security">
+    <h2>Security</h2>
+    <p>We take security seriously and implement industry-standard protections:</p>
+    <ul>
+      <li>All connections are encrypted via TLS 1.2+ with HSTS</li>
+      <li>Strict Content Security Policy to prevent XSS attacks</li>
+      <li>Rate limiting on all authentication endpoints</li>
+      <li>Replay attack prevention via cryptographic nullifiers</li>
+      <li>Rotating refresh tokens — stolen tokens are invalidated on use</li>
+      <li>No access logs containing user activity</li>
+    </ul>
+    <p>If you discover a security vulnerability, please report it to <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7">Support Chat</a>.</p>
+  </section>
+
+  <section id="third-party-services">
+    <h2>Third-Party Services</h2>
+    <p>YapID uses the following third-party services:</p>
+    <ul>
+      <li><strong>Google Fonts</strong> — for typography (fonts.googleapis.com, fonts.gstatic.com). Font requests include your IP address as part of the HTTP request.</li>
+      <li><strong>esm.sh</strong> — for loading cryptographic libraries in the browser. Requests to esm.sh include your IP address.</li>
+    </ul>
+    <p>We are actively working to self-host these dependencies to eliminate all third-party connections.</p>
+  </section>
+
+  <section id="children">
+    <h2>Children's Privacy</h2>
+    <p>YapID does not knowingly collect any information from children under 13 years of age. Because we collect no personal data, we cannot determine user ages. If you are under 13, please do not use this service.</p>
+  </section>
+
+  <section id="changes">
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify users of significant changes by updating the "Last updated" date and posting a notice on our website. Continued use of the service after changes take effect constitutes acceptance of the updated policy.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>For privacy-related questions or requests:</p>
+    <ul>
+      <li>Email: <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7">Support Chat</a></li>
+      <li>GitHub: <a href="https://github.com/YapID">github.com/YapID</a></li>

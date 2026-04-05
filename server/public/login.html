@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>YapID — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--bg2:#101010;--bg3:#181818;
+  --border:#1e1e1e;--border2:#2a2a2a;
+  --text:#f0f0f0;--text2:#777;--text3:#3a3a3a;
+  --purple:#7c3aed;--purple2:#6d28d9;--purple3:#a78bfa;
+  --green:#22c55e;--green2:#16a34a;
+  --red:#ef4444;--amber:#f59e0b;
+  --mono:'Space Mono',monospace;--sans:'Bricolage Grotesque',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--sans);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:24px;position:relative;overflow:hidden;
+}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(124,58,237,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,.025) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
+.bg-orb{position:fixed;top:10%;left:20%;width:500px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(124,58,237,.05),transparent 70%);pointer-events:none}
+.layout{display:grid;grid-template-columns:1fr 400px;gap:64px;max-width:880px;width:100%;position:relative;z-index:1;align-items:center;}
+.info{animation:fadeLeft .5s var(--ease) both}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:40px;text-decoration:none}
+.logo img{width:40px;height:40px;object-fit:contain}
+.info-h{font-size:clamp(26px,3vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:10px}
+.info-h span{color:var(--purple3)}
+.info-sub{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:32px}
+.scores{margin-bottom:32px;display:flex;flex-direction:column;gap:8px}
+.score-row{display:grid;grid-template-columns:130px 1fr 34px;gap:10px;align-items:center}
+.score-label{font-family:var(--mono);font-size:9px;color:var(--text2);letter-spacing:.04em}
+.score-track{height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
+.score-bar{height:100%;border-radius:2px;transition:width 1s var(--ease)}
+.score-bar.us{background:linear-gradient(90deg,var(--purple2),var(--purple3))}
+.score-bar.them{background:var(--text3)}
+.score-val{font-family:var(--mono);font-size:9px;text-align:right}
+.score-val.us{color:var(--purple3)}.score-val.them{color:var(--text3)}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-family:var(--mono);font-size:9px;padding:4px 10px;border-radius:20px;border:1px solid;letter-spacing:.04em}
+.pill.g{color:var(--green2);border-color:rgba(34,197,94,.2);background:rgba(34,197,94,.04)}
+.pill.p{color:var(--purple3);border-color:rgba(124,58,237,.2);background:rgba(124,58,237,.04)}
+.card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:32px;width:100%;animation:slideUp .4s .1s var(--ease) both;}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.from-badge{display:none;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:9px;color:var(--text2);margin-bottom:18px;overflow:hidden;}
+.from-badge.show{display:flex}
+.from-dot{width:5px;height:5px;border-radius:50%;background:var(--green2);flex-shrink:0;box-shadow:0 0 4px var(--green2)}
+.from-host{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.card-h{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:3px}
+.card-sub{font-size:11px;color:var(--text2);margin-bottom:22px;line-height:1.6}
+.screen{display:none}.screen.active{display:block}
+.auto-wrap{text-align:center;padding:4px 0}
+.auto-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple2),var(--purple));display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;color:#fff;margin:0 auto 10px;border:2px solid rgba(124,58,237,.3)}
+.auto-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.auto-id{font-family:var(--mono);font-size:8px;color:var(--text3);margin-bottom:18px;word-break:break-all;line-height:1.6}
+.btn{width:100%;padding:11px;border-radius:8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:7px}
+.btn-p{background:#fff;color:#000;border:1px solid #fff}
+.btn-p:hover{background:transparent;color:#fff}
+.btn-p:disabled{opacity:.4;cursor:not-allowed}
+.btn-s{background:none;color:var(--text2);border:1px solid var(--border2)}
+.btn-s:hover{border-color:var(--text);color:var(--text)}
+.btn-row{display:flex;gap:7px;margin-bottom:7px}
+.btn-row .btn{margin-bottom:0}
+.div{display:flex;align-items:center;gap:10px;margin:12px 0;font-family:var(--mono);font-size:9px;color:var(--text3)}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border)}
+.lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;display:block}
+textarea.inp,input.inp{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text);outline:none;transition:border-color .15s;resize:none;line-height:1.7;margin-bottom:9px}
+textarea.inp:focus,input.inp:focus{border-color:#444}
+textarea.inp::placeholder{color:var(--text3)}
+.mn-box{background:var(--bg);border:1px solid rgba(124,58,237,.3);border-radius:9px;padding:16px;font-family:var(--mono);font-size:12px;line-height:2;color:var(--purple3);word-spacing:6px;margin-bottom:10px;position:relative;text-align:center}
+.warn{background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.18);border-radius:6px;padding:9px 12px;font-size:11px;color:var(--amber);line-height:1.6;margin-bottom:10px;display:flex;gap:6px}
+.st{font-family:var(--mono);font-size:10px;margin-top:6px;min-height:14px;text-align:center}
+.st.err{color:var(--red)}.st.ok{color:var(--green2)}
+.foot{margin-top:18px;text-align:center;font-family:var(--mono);font-size:9px;color:var(--text3);line-height:1.8}
+.foot a{color:var(--text3);text-decoration:none;border-bottom:1px solid var(--border);transition:color .15s}
+.foot a:hover{color:var(--text2)}
+.spin{width:12px;height:12px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ok-wrap{text-align:center;padding:16px 0}
+.ok-icon{font-size:36px;margin-bottom:10px;animation:pop .4s var(--ease)}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:780px){
+  .layout{grid-template-columns:1fr;gap:28px;max-width:400px}
+  .info{order:2}.card{order:1}
+  .info-h{font-size:22px}
+  .bg-orb{display:none}
+  .btn-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb"></div>
+
+<div class="layout">
+  <div class="info">
+    <a href="https://id.yaphub.xyz" class="logo">
+      <img src="/yapid.png" alt="YapID">
+    </a>
+    <h1 class="info-h">One identity.<br><span>Zero data.</span></h1>
+    <p class="info-sub">12 secret words. No email, no password, no account. Your identity is cryptographically derived in your browser — the server never sees your words.</p>
+    <div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Privacy Score — vs. alternatives</div>
+    <div class="scores">
+      <div class="score-row"><span class="score-label">YapID</span><div class="score-track"><div class="score-bar us" data-w="93" style="width:0"></div></div><span class="score-val us">93%</span></div>
+      <div class="score-row"><span class="score-label">Wallet Connect</span><div class="score-track"><div class="score-bar them" data-w="67" style="width:0"></div></div><span class="score-val them">67%</span></div>
+      <div class="score-row"><span class="score-label">Auth0 / Clerk</span><div class="score-track"><div class="score-bar them" data-w="41" style="width:0"></div></div><span class="score-val them">41%</span></div>
+      <div class="score-row"><span class="score-label">Sign in w/ Google</span><div class="score-track"><div class="score-bar them" data-w="12" style="width:0"></div></div><span class="score-val them">12%</span></div>
+    </div>
+    <div class="pills">
+      <span class="pill g">✓ No email</span>
+      <span class="pill g">✓ No IP stored</span>
+      <span class="pill p">✓ AES-256 encrypted</span>
+      <span class="pill p">✓ Works everywhere</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="from-badge" id="from-badge">
+      <div class="from-dot"></div>
+      <span style="flex-shrink:0;color:var(--text2)">signing in to</span>
+      <span class="from-host" id="from-host"></span>
+    </div>
+    <div class="card-h" id="card-h">Sign in</div>
+    <div class="card-sub">Use your YapID or create one in seconds.</div>
+
+    <!-- AUTO LOGIN -->
+    <div class="screen" id="screen-auto">
+      <div class="auto-wrap">
+        <div class="auto-av" id="auto-av">?</div>
+        <div class="auto-name" id="auto-name">Anonymous</div>
+        <div class="auto-id" id="auto-id"></div>
+        <button class="btn btn-p" onclick="doAutoLogin()">Continue</button>
+        <button class="btn btn-s" onclick="showScreen('choose')">Use different account</button>
+      </div>
+    </div>
+
+    <!-- CHOOSE -->
+    <div class="screen" id="screen-choose">
+      <button class="btn btn-p" onclick="showScreen('create')">✦ Create new YapID</button>
+      <div class="div">or</div>
+      <button class="btn btn-s" onclick="showScreen('login')">Login with YapID</button>
+    </div>
+
+    <!-- CREATE -->
+    <div class="screen" id="screen-create">
+      <div id="step1">
+        <p style="font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.7">We generate 12 secret words — your permanent key. Write them on paper or download a backup card. Shown only once.</p>
+        <button class="btn btn-p" id="btn-gen" onclick="doGenerate()">Generate 12 words</button>
+        <button class="btn btn-s" onclick="showScreen('choose')">← Back</button>
+      </div>
+      <div id="step2" style="display:none">
+        <div class="warn"><span>⚠️</span><span>Store these 12 words safely. They are your only way to access your account. Shown only once.</span></div>
+        <div class="mn-box" id="mn-box"></div>
+        <div class="btn-row">
+          <button class="btn btn-s" onclick="copyMn()" id="btn-copy">⎘ Copy</button>
+          <button class="btn btn-s" onclick="downloadCard()" id="btn-dl">⬇ Download Card</button>
+        </div>
+        <button class="btn btn-p" id="btn-confirm" onclick="doConfirm()">✓ I saved them — Sign In</button>
+        <div class="st" id="st-create"></div>
+      </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="screen" id="screen-login">
+      <label class="lbl">BIP-39 Passphrase (12 words)</label>
+      <textarea class="inp" id="words" rows="3" placeholder="word1 word2 word3 ... word12" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+      <button class="btn btn-p" id="btn-login" onclick="doLogin()">Sign In</button>
+      <button class="btn btn-s" onclick="showScreen('choose')">← Back</button>
+      <div class="st" id="st-login"></div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="screen" id="screen-loading">
+      <div style="text-align:center;padding:28px 0">
+        <div class="spin" style="margin:0 auto 12px"></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3)">Signing in...</div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="screen" id="screen-success">
+      <div class="ok-wrap">
+        <div class="ok-icon">✓</div>
+        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px">Signed in!</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3)">Redirecting...</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      Your 12 words (BIP-39) never leave this page.<br>
+      <a href="https://yaphub.xyz/privacy" target="_blank">Privacy</a>
+      &nbsp;·&nbsp;
+      <a href="https://id.yaphub.xyz" target="_blank">About YapID</a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+const EP = 'https://id.yaphub.xyz';
+const p  = new URLSearchParams(location.search);
+const rd = p.get('redirect') || '';
+const st = p.get('state')    || '';
+
+function validRd(u){try{const x=new URL(u);return x.protocol==='https:'||x.hostname==='localhost';}catch{return false;}}
+
+if(rd && validRd(rd)){
+  const h=new URL(rd).hostname;
+  document.getElementById('from-host').textContent=h;
+  document.getElementById('from-badge').classList.add('show');
+  document.getElementById('card-h').textContent='Sign in to '+h;
+}
+
+// DB
+async function dbOpen(){return new Promise((r,j)=>{const q=indexedDB.open('yapid-v1',1);q.onupgradeneeded=e=>e.target.result.createObjectStore('keys');q.onsuccess=e=>r(e.target.result);q.onerror=()=>j(q.error);});}
+async function dbGet(k){const d=await dbOpen();return new Promise((r,j)=>{const q=d.transaction('keys','readonly').objectStore('keys').get(k);q.onsuccess=()=>r(q.result??null);q.onerror=()=>j(q.error);});}
+async function dbSet(k,v){const d=await dbOpen();return new Promise((r,j)=>{const q=d.transaction('keys','readwrite').objectStore('keys').put(v,k);q.onsuccess=()=>r();q.onerror=()=>j(q.error);});}
+async function dbDel(k){const d=await dbOpen();return new Promise((r,j)=>{const q=d.transaction('keys','readwrite').objectStore('keys').delete(k);q.onsuccess=()=>r();q.onerror=()=>j(q.error);});}
+async function getKey(){const e=await dbGet('enc-key');if(e)return e;const k=await crypto.subtle.generateKey({name:'AES-GCM',length:256},false,['encrypt','decrypt']);await dbSet('enc-key',k);return k;}
+async function enc(t){const k=await getKey();const iv=crypto.getRandomValues(new Uint8Array(12));const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},k,new TextEncoder().encode(t));return{iv:Array.from(iv),ct:Array.from(new Uint8Array(ct))};}
+async function dec(s){const k=await getKey();const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:new Uint8Array(s.iv)},k,new Uint8Array(s.ct));return new TextDecoder().decode(pt);}
+
+async function toKeypair(mn){
+  const e=new TextEncoder();
+  const km=await crypto.subtle.importKey('raw',e.encode(mn),'PBKDF2',false,['deriveBits']);
+  const b=await crypto.subtle.deriveBits({name:'PBKDF2',salt:e.encode('yapid-bip39'),iterations:210000,hash:'SHA-256'},km,256);
+  const {default:n}=await import('https://esm.sh/tweetnacl@1.0.3');
+  const kp=n.sign.keyPair.fromSeed(new Uint8Array(b).slice(0,32));
+  const {default:bs58}=await import('https://esm.sh/bs58@6.0.0');
+  return{publicKey:bs58.encode(kp.publicKey),secretKey:kp.secretKey};
+}
+async function sign(msg,sk){
+  const {default:n}=await import('https://esm.sh/tweetnacl@1.0.3');
+  const tu=await import('https://esm.sh/tweetnacl-util@0.15.1');
+  const du=tu.decodeUTF8||tu.default.decodeUTF8;
+  const {default:bs58}=await import('https://esm.sh/bs58@6.0.0');
+  return bs58.encode(n.sign.detached(du(msg),sk));
+}
+async function genMn(){const {generateMnemonic:g}=await import('https://esm.sh/bip39@3.1.0');return g(128);}
+
+async function loginMn(mn){
+  const {publicKey,secretKey}=await toKeypair(mn.trim());
+  await fetch(`${EP}/auth/register`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({walletAddress:publicKey})});
+  const cr=await fetch(`${EP}/auth/challenge`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({walletAddress:publicKey,scope:'openid profile'})});
+  const {challengeId,message:sm}=await cr.json();
+  const sig=await sign(sm,secretKey);
+  const lr=await fetch(`${EP}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({walletAddress:publicKey,challengeId,signature:sig})});
+  const s=await lr.json();
+  if(!lr.ok)throw new Error(s.error||'Login failed');
+  const accessToken=s.access_token||s.token;
+  const refreshToken=s.refresh_token;
+  await dbSet('session',{accountId:s.sub||s.accountId,isPremium:!!s.yapid_premium||!!s.isPremium,expiresAt:s.expiresAt||(Date.now()+(s.expires_in||3600)*1000),encryptedToken:await enc(accessToken),encryptedRefresh:refreshToken?await enc(refreshToken):null});
+  return s;
+}
+
+async function checkAuto(){
+  const s=await dbGet('session');
+  if(!s||s.expiresAt<Date.now()){showScreen('choose');return;}
+  let token;try{token=await dec(s.encryptedToken);}catch{await dbDel('session');showScreen('choose');return;}
+  const r=await fetch(`${EP}/auth/verify`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_token:token,token})});
+  if(!r.ok){await dbDel('session');showScreen('choose');return;}
+  const d=await r.json();
+  if(!d.valid){await dbDel('session');showScreen('choose');return;}
+  window._autoSession={...d,access_token:token,token};
+  const id=d.sub||d.accountId||'';
+  document.getElementById('auto-av').textContent=id.slice(0,2).toUpperCase();
+  document.getElementById('auto-name').textContent='Anonymous';
+  document.getElementById('auto-id').textContent=id;
+  showScreen('auto');
+}
+
+function redirect(session){
+  const at=typeof session==='string'?session:(session.access_token||session.token);
+  const rt=typeof session==='string'?null:session.refresh_token;
+  showScreen('success');
+  if(!rd||!validRd(rd))return;
+  let url=rd+'#yapid_token='+encodeURIComponent(at);
+  if(rt)url+='&yapid_refresh='+encodeURIComponent(rt);
+  if(st)url+='&state='+encodeURIComponent(st);
+  setTimeout(()=>{window.location.href=url;},600);
+}
+
+// ── Download Card ─────────────────────────────────────────────
+window.downloadCard = function(){
+  const mn = window._pendingMn;
+  if(!mn) return;
+  const words = mn.split(' ');
+  const date  = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>YapID Backup Card</title>
+<style>
+  @page{size:A5;margin:0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Courier New',monospace;background:#fff;color:#000;padding:32px;width:148mm;min-height:105mm}
+  .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #000}
+  .title{font-size:18px;font-weight:bold;letter-spacing:.04em}
+  .subtitle{font-size:10px;color:#555;margin-top:2px}
+  .date{font-size:10px;color:#777}
+  .warn{background:#fffbea;border:1px solid #f0c000;border-radius:4px;padding:8px 12px;font-size:10px;line-height:1.6;margin-bottom:16px}
+  .words{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px}
+  .word{background:#f5f5f5;border:1px solid #ddd;border-radius:4px;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:6px}
+  .word-num{font-size:9px;color:#999;min-width:16px}
+  .word-text{font-weight:bold;letter-spacing:.04em}
+  .footer{border-top:1px solid #ddd;padding-top:10px;font-size:9px;color:#777;display:flex;justify-content:space-between;line-height:1.6}
+  .instructions{background:#f0f0f0;border-radius:4px;padding:8px 12px;font-size:10px;line-height:1.7;margin-bottom:12px}
+  @media print{body{padding:20px}}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">YapID Backup Card</div>
+      <div class="subtitle">Anonymous Identity — 12-Word Recovery Phrase</div>
+    </div>
+    <div class="date">${date}</div>
+  </div>
+
+  <div class="warn">
+    ⚠ Keep this card in a safe place. Anyone with these 12 words has full access to your account.
+    Never photograph or store digitally. Never share with anyone.
+  </div>
+
+  <div class="words">
+    ${words.map((w,i)=>`
+    <div class="word">
+      <span class="word-num">${i+1}.</span>
+      <span class="word-text">${w}</span>
+    </div>`).join('')}
+  </div>
+
+  <div class="instructions">
+    <strong>How to use:</strong> Go to id.yaphub.xyz → Sign in → "Login with YapID" → Enter your 12 words in order.
+    Works on any device, any browser, any time.
+  </div>
+
+  <div class="footer">
+    <span>id.yaphub.xyz · Anonymous Identity · BSL 1.1</span>
+    <span>Generated in browser · Nothing sent to server</span>
+  </div>
+</body>
+</html>`;
+
+  const blob = new Blob([html], {type:'text/html'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'yapid-backup-card.html';
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+window.copyMn = function(){
+  const mn = window._pendingMn;
+  if(!mn) return;
+  navigator.clipboard.writeText(mn).then(()=>{
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✓ Copied!';
+    setTimeout(()=>{ btn.textContent = '⎘ Copy'; }, 2000);
+  });
+};
+
+window.showScreen=n=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+n).classList.add('active');};
+window.doAutoLogin=()=>{showScreen('loading');redirect(window._autoSession);};
+
+window.doGenerate=async()=>{
+  const b=document.getElementById('btn-gen');
+  b.disabled=true;b.innerHTML='<div class="spin"></div> Generating...';
+  try{
+    const m=await genMn();
+    window._pendingMn=m;
+    document.getElementById('mn-box').textContent=m;
+    document.getElementById('step1').style.display='none';
+    document.getElementById('step2').style.display='block';
+  }catch(e){b.disabled=false;b.textContent='Generate 12 words';}
+};
+
+window.doConfirm=async()=>{
+  const b=document.getElementById('btn-confirm');
+  const s=document.getElementById('st-create');
+  b.disabled=true;b.innerHTML='<div class="spin"></div> Signing in...';
+  try{
+    const sess=await loginMn(window._pendingMn);
+    window._pendingMn=null;
+    redirect(sess);
+  }catch(e){
+    s.textContent=e.message;s.className='st err';
+    b.disabled=false;b.textContent='✓ I saved them — Sign In';
+  }
+};
+
+window.doLogin=async()=>{
+  const w=document.getElementById('words').value.trim();
+  const b=document.getElementById('btn-login'),s=document.getElementById('st-login');
+  if(!w){s.textContent='Enter your 12 words';s.className='st err';return;}
+  b.disabled=true;b.innerHTML='<div class="spin"></div> Signing in...';
+  try{const sess=await loginMn(w);redirect(sess);}
+  catch(e){s.textContent=e.message;s.className='st err';b.disabled=false;b.textContent='Sign In';}
+};
+
+setTimeout(()=>{document.querySelectorAll('.score-bar').forEach(b=>{b.style.width=b.dataset.w+'%';});},300);
+checkAuto();
+</script>
+</body>
+</html>

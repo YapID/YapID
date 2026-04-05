@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Terms of Service — YapID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--bg2:#101010;--bg3:#181818;--border:#1e1e1e;--border2:#2a2a2a;--text:#f0f0f0;--text2:#888;--text3:#444;--purple3:#a78bfa;--mono:'Space Mono',monospace;--sans:'Bricolage Grotesque',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);padding:24px}
+header{display:flex;align-items:center;justify-content:space-between;max-width:800px;margin:0 auto 48px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo img{width:36px;height:36px;object-fit:contain}
+.hdr-link{font-family:var(--mono);font-size:10px;color:var(--text3);text-decoration:none}
+.hdr-link:hover{color:var(--text2)}
+.doc{max-width:800px;margin:0 auto}
+.doc-header{margin-bottom:48px}
+.doc-header h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.03em;color:#fff;margin-bottom:8px}
+.doc-header .meta{font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.8}
+.toc{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:24px;margin-bottom:48px}
+.toc-title{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.toc ol{padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.toc li{font-size:13px;color:var(--text2)}
+.toc a{color:var(--text2);text-decoration:none;transition:color .15s}
+.toc a:hover{color:var(--text)}
+section{margin-bottom:48px;scroll-margin-top:24px}
+section h2{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+section h3{font-size:15px;font-weight:700;color:#fff;margin:20px 0 8px;font-family:var(--mono)}
+section p{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:12px}
+section ul,section ol{padding-left:22px;margin-bottom:12px;display:flex;flex-direction:column;gap:6px}
+section li{font-size:14px;color:var(--text2);line-height:1.7}
+section strong{color:var(--text)}
+section a{color:var(--purple3);text-decoration:none}
+section a:hover{text-decoration:underline}
+.highlight{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:16px 20px;margin:16px 0}
+.highlight p{margin-bottom:0}
+footer{max-width:800px;margin:48px auto 0;padding-top:24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+footer a{color:var(--text3);text-decoration:none}
+footer a:hover{color:var(--text2)}
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo"><img src="/yapid.png" alt="YapID"></a>
+  <a href="/" class="hdr-link">← Home</a>
+</header>
+
+<div class="doc">
+  <div class="doc-header">
+    <h1>Terms of Service</h1>
+    <div class="meta">
+      Last updated: April 4, 2026 &nbsp;·&nbsp;
+      Effective: April 4, 2026 &nbsp;·&nbsp;
+      Version: 1.0
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#acceptance">Acceptance of Terms</a></li>
+      <li><a href="#service">Description of Service</a></li>
+      <li><a href="#account">Your Account & 12-Word Passphrase</a></li>
+      <li><a href="#privacy">Privacy & Data</a></li>
+      <li><a href="#developer">Developer Integration</a></li>
+      <li><a href="#acceptable">Acceptable Use</a></li>
+      <li><a href="#premium">Premium Features</a></li>
+      <li><a href="#ip">Intellectual Property</a></li>
+      <li><a href="#disclaimer">Disclaimers & Limitations</a></li>
+      <li><a href="#termination">Termination</a></li>
+      <li><a href="#changes">Changes to Terms</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </div>
+
+  <section id="acceptance">
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using YapID ("Service", "we", "us", "our") at <strong>id.yaphub.xyz</strong>, or by integrating YapID into your platform, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Service.</p>
+    <p>These Terms apply to all users of YapID, including individuals who use YapID to authenticate on third-party platforms, and developers who integrate YapID into their applications.</p>
+  </section>
+
+  <section id="service">
+    <h2>2. Description of Service</h2>
+    <p>YapID is a privacy-first anonymous authentication service. The Service allows users to create and maintain a persistent anonymous digital identity using a 12-word BIP-39 passphrase, without providing any personal information such as an email address, phone number, or legal name.</p>
+    <h3>What the Service provides:</h3>
+    <ul>
+      <li>Generation of a unique anonymous identity derived from a 12-word passphrase</li>
+      <li>Authentication tokens (JWT) that can be verified by third-party platforms</li>
+      <li>Session management including the ability to logout from all devices</li>
+      <li>Premium status verification for connected YAP services</li>
+      <li>An SDK and API for developers to integrate YapID authentication</li>
+    </ul>
+    <h3>What the Service does not provide:</h3>
+    <ul>
+      <li>Password recovery or account recovery of any kind</li>
+      <li>Storage of personal information</li>
+      <li>Customer support that can verify or reset your identity</li>
+    </ul>
+  </section>
+
+  <section id="account">
+    <h2>3. Your Account & 12-Word Passphrase</h2>
+    <div class="highlight">
+      <p><strong>⚠️ Critical:</strong> Your 12-word BIP-39 passphrase is the sole key to your YapID account. We do not store it, cannot recover it, and have no way to restore access to your account if you lose it. Keep it safe.</p>
+    </div>
+    <h3>You are solely responsible for:</h3>
+    <ul>
+      <li>Storing your 12-word passphrase securely (we recommend writing it on paper and storing it in a safe place)</li>
+      <li>Never sharing your 12-word passphrase with anyone, including YapID staff</li>
+      <li>Any and all activity that occurs under your YapID account</li>
+      <li>Understanding that losing your passphrase means permanent loss of access to your account</li>
+    </ul>
+    <h3>Your passphrase and how it works:</h3>
+    <p>Your 12 words are used to derive an Ed25519 cryptographic keypair entirely within your browser. Only a cryptographic proof (signature) is sent to our servers — your actual words never leave your device. The server stores only a SHA-256 hash of your derived public key, which cannot be reversed to reveal your 12 words.</p>
+    <p>Because we have zero knowledge of your passphrase, <strong>we cannot help you recover access to your account if you lose your 12 words.</strong> This is by design and is the foundation of our privacy model.</p>
+  </section>
+
+  <section id="privacy">
+    <h2>4. Privacy & Data</h2>
+    <p>YapID is built around a principle of collecting the absolute minimum data necessary to provide the Service. Our full Privacy Policy is available at <a href="/privacy">id.yaphub.xyz/privacy</a>.</p>
+    <h3>What we store:</h3>
+    <ul>
+      <li>A SHA-256 hash of your public key (cannot be reversed)</li>
+      <li>Session identifiers and their expiration timestamps</li>
+      <li>Refresh token identifiers (not the tokens themselves)</li>
+      <li>One-time nullifiers to prevent replay attacks</li>
+      <li>Premium status linked to your anonymous account ID</li>
+    </ul>
+    <h3>What we never store:</h3>
+    <ul>
+      <li>Your 12-word passphrase</li>
+      <li>Your IP address</li>
+      <li>Your email address, name, or any personal identifiers</li>
+      <li>Device fingerprints or user agent strings</li>
+      <li>Location data of any kind</li>
+    </ul>
+    <h3>What third-party platforms receive:</h3>
+    <p>When you authenticate on a third-party platform using YapID, that platform receives only your anonymous <strong>accountId</strong> (a UUID) and your <strong>premium status</strong> (boolean). No name, no avatar, no personal data is ever transmitted.</p>
+    <h3>GDPR:</h3>
+    <p>Because we store no personal data, there is technically nothing to delete under GDPR. However, you may request deletion of your account hash and associated session data by logging out of all devices, which effectively terminates your presence in our database.</p>
+  </section>
+
+  <section id="developer">
+    <h2>5. Developer Integration</h2>
+    <p>If you integrate YapID into your platform ("Developer"), you agree to the following additional terms:</p>
+    <h3>Permitted use:</h3>
+    <ul>
+      <li>Using the YapID API and SDK to authenticate users on your platform</li>
+      <li>Verifying YapID tokens via the <code style="font-family:var(--mono);font-size:12px;background:var(--bg3);padding:1px 5px;border-radius:3px">/api/verify</code> endpoint</li>
+      <li>Using the YapID button and SDK in commercial and non-commercial projects</li>
+    </ul>
+    <h3>Prohibited use:</h3>
+    <ul>
+      <li>Using YapID to build a competing anonymous authentication service for commercial purposes (see License section)</li>
+      <li>Attempting to correlate or de-anonymize YapID users</li>
+      <li>Storing YapID tokens longer than necessary for session management</li>
+      <li>Misrepresenting YapID's capabilities or privacy guarantees to your users</li>
+    </ul>
+    <h3>Developer responsibilities:</h3>
+    <p>Developers are responsible for clearly informing their users that YapID is being used for authentication and for complying with all applicable privacy laws in their jurisdiction.</p>
+  </section>
+
+  <section id="acceptable">
+    <h2>6. Acceptable Use</h2>
+    <p>You may not use YapID to:</p>
+    <ul>
+      <li>Engage in any illegal activity or facilitate illegal activities</li>
+      <li>Attempt to circumvent, reverse-engineer, or compromise the security of the Service</li>
+      <li>Create multiple accounts for the purpose of abusing any platform that uses YapID</li>
+      <li>Use automated means to create large numbers of YapID accounts</li>
+      <li>Interfere with or disrupt the integrity or performance of the Service</li>
+      <li>Attempt to gain unauthorized access to the Service or its systems</li>
+    </ul>
+    <p>We reserve the right to revoke access to accounts that violate these terms. Because we do not store personal data, enforcement is limited to blocking specific account hashes.</p>
+  </section>
+
+  <section id="premium">
+    <h2>7. Premium Features</h2>
+    <p>Premium status on YapID is linked to a YAP Premium subscription purchased through <a href="https://yaphub.xyz">yaphub.xyz</a>. Premium features within the YapID ecosystem are subject to the terms and conditions of the YAP service.</p>
+    <p>YapID itself is and will remain free to use for authentication purposes. Premium status only affects optional features within connected YAP services and does not restrict your ability to use YapID for authentication.</p>
+  </section>
+
+  <section id="ip">
+    <h2>8. Intellectual Property</h2>
+    <p>YapID is licensed under the <strong>Business Source License 1.1 (BSL 1.1)</strong>. The source code is available at <a href="https://github.com/YapID" target="_blank" rel="noopener">github.com/YapID</a>.</p>
+    <p>Under BSL 1.1:</p>
+    <ul>
+      <li>You may read, audit, and verify the source code</li>
+      <li>You may use YapID for personal and non-commercial projects</li>
+      <li>You may not operate a competing commercial authentication service based on our code without a commercial license</li>
+      <li>The license automatically converts to <strong>Apache 2.0</strong> on January 1, 2030</li>
+    </ul>
+    <p>For commercial licensing inquiries, contact us at <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7">Support Chat</a>.</p>
+  </section>
+
+  <section id="disclaimer">
+    <h2>9. Disclaimers & Limitations of Liability</h2>
+    <div class="highlight">
+      <p>THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, OR COMPLETELY SECURE.</p>
+    </div>
+    <p>To the maximum extent permitted by law, YapID and its operators shall not be liable for:</p>
+    <ul>
+      <li>Loss of access to your account due to loss of your 12-word passphrase</li>
+      <li>Any damages arising from unauthorized access to your account</li>
+      <li>Any indirect, incidental, special, consequential, or punitive damages</li>
+      <li>Any loss of data, revenue, or profits arising from use of the Service</li>
+    </ul>
+    <p>Our total liability to you for any claims arising from the use of the Service shall not exceed €100 EUR.</p>
+  </section>
+
+  <section id="termination">
+    <h2>10. Termination</h2>
+    <p>You may stop using YapID at any time. Because we store no personal data linked to you, there is no formal account deletion process. Logging out of all devices via the "Logout from all devices" feature effectively removes your active sessions from our system.</p>
+    <p>We reserve the right to suspend or terminate access to the Service for accounts that violate these Terms. Given our privacy model, such actions are limited to blocking specific account identifiers.</p>
+    <p>We may discontinue the Service at any time with reasonable notice. In such an event, we will provide at least 90 days notice via the YapID website.</p>
+  </section>
+
+  <section id="changes">
+    <h2>11. Changes to Terms</h2>
+    <p>We may update these Terms from time to time. We will notify users of material changes by updating the "Last updated" date at the top of this page and, where possible, by posting a notice on the YapID website.</p>
+    <p>Continued use of the Service after changes take effect constitutes acceptance of the new Terms.</p>
+  </section>
+
+  <section id="contact">
+    <h2>12. Contact</h2>
+    <p>For questions about these Terms, please contact us at:</p>
+    <ul>
+      <li>Email: <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7">Support Chat</a></li>
+      <li>GitHub: <a href="https://github.com/YapID" target="_blank" rel="noopener">github.com/YapID</a></li>
+      <li>Website: <a href="https://id.yaphub.xyz">id.yaphub.xyz</a></li>
+    </ul>
+    <p>These Terms are governed by applicable law. Any disputes shall be resolved through good-faith negotiation before pursuing other remedies.</p>
+  </section>
+</div>
+
+<footer>
+  <span>© 2026 YapID · BSL 1.1 License</span>
+  <
