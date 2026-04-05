@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>YapID — The Privacy-First Identity Layer</title>
+<meta name="description" content="No email. No password. No tracking. 12 words. The most private authentication system ever built.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--bg2:#0e0e0e;--bg3:#161616;
+  --border:#1a1a1a;--border2:#252525;
+  --text:#f0f0f0;--text2:#888;--text3:#3a3a3a;
+  --purple:#7c3aed;--purple2:#6d28d9;--purple3:#a78bfa;
+  --green:#22c55e;--green2:#16a34a;
+  --red:#ef4444;--amber:#f59e0b;
+  --mono:'Space Mono',monospace;
+  --sans:'Bricolage Grotesque',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+
+/* ── HEADER ── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:58px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;
+  background:rgba(8,8,8,.9);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{width:60px;height:60px;object-fit:contain}
+nav{display:flex;gap:28px;align-items:center}
+nav a{font-family:var(--mono);font-size:9px;color:var(--text3);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s}
+nav a:hover{color:var(--text2)}
+.hdr-cta{padding:7px 16px;border:1px solid var(--purple2);border-radius:6px;background:rgba(124,58,237,.08);color:var(--purple3);font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-decoration:none;transition:all .2s}
+.hdr-cta:hover{background:rgba(124,58,237,.18);border-color:var(--purple3)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:100px 48px 80px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(124,58,237,.07),transparent 70%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(124,58,237,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(124,58,237,.03) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black,transparent);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 14px;border:1px solid rgba(124,58,237,.25);
+  border-radius:20px;background:rgba(124,58,237,.06);
+  font-family:var(--mono);font-size:9px;color:var(--purple3);
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:32px;
+  animation:fadeUp .7s var(--ease) both;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green2);box-shadow:0 0 6px var(--green2)}
+.hero-logo{width:96px;height:96px;object-fit:contain;margin-bottom:28px;animation:fadeUp .7s .05s var(--ease) both;filter:drop-shadow(0 0 20px rgba(124,58,237,.25))}
+h1{
+  font-size:clamp(52px,8vw,104px);font-weight:800;
+  line-height:.9;letter-spacing:-.04em;
+  margin-bottom:28px;
+  animation:fadeUp .7s .1s var(--ease) both;
+}
+h1 .line1{display:block;color:#fff}
+h1 .line2{display:block;color:var(--text3)}
+.hero-sub{
+  font-size:18px;color:var(--text2);
+  max-width:500px;margin:0 auto 48px;
+  line-height:1.8;
+  animation:fadeUp .7s .18s var(--ease) both;
+}
+.hero-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:72px;
+  animation:fadeUp .7s .25s var(--ease) both;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;background:#fff;color:#000;
+  border:none;border-radius:8px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  cursor:pointer;text-decoration:none;
+  transition:all .25s var(--ease);letter-spacing:.04em;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,255,255,.12)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;background:transparent;
+  border:1px solid var(--border2);border-radius:8px;
+  color:var(--text2);font-family:var(--mono);font-size:12px;
+  cursor:pointer;text-decoration:none;
+  transition:all .25s var(--ease);
+}
+.btn-ghost:hover{border-color:var(--text);color:var(--text);transform:translateY(-2px)}
+
+/* Hero Stats */
+.hero-stats{
+  display:flex;gap:0;
+  border:1px solid var(--border2);border-radius:12px;
+  background:var(--bg2);overflow:hidden;
+  animation:fadeUp .7s .32s var(--ease) both;
+}
+.stat{padding:20px 36px;text-align:center;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-val{font-family:var(--mono);font-size:26px;font-weight:700;color:#fff;display:block;letter-spacing:-.03em}
+.stat-lbl{font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:.14em;text-transform:uppercase;margin-top:4px;display:block}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── SECTIONS ── */
+section{padding:96px 48px}
+.wrap{max-width:1100px;margin:0 auto}
+.section-tag{
+  font-family:var(--mono);font-size:9px;color:var(--text3);
+  letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.section-tag::before{content:'';display:block;width:16px;height:1px;background:var(--border2)}
+.section-h{font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:#fff;margin-bottom:16px}
+.section-sub{font-size:15px;color:var(--text2);line-height:1.8;max-width:460px}
+
+/* ── PROBLEM SECTION ── */
+.problem-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:48px}
+.problem-card{background:var(--bg);padding:28px;position:relative}
+.problem-card.bad{opacity:.6}
+.problem-card .tag{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:inline-flex;align-items:center;gap:5px}
+.tag.red{color:var(--red)}.tag.green{color:var(--green2)}
+.problem-card h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px}
+.problem-card p{font-size:12px;color:var(--text2);line-height:1.7}
+.problem-list{list-style:none;margin-top:10px}
+.problem-list li{font-family:var(--mono);font-size:10px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.problem-list li:last-child{border-bottom:none}
+.x{color:var(--red)}.ck{color:var(--green2)}
+
+/* ── PRIVACY SCORES ── */
+.privacy-section{border-top:1px solid var(--border)}
+.score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:48px}
+.score-card{background:var(--bg);padding:28px 24px;position:relative}
+.score-card.winner{background:linear-gradient(135deg,rgba(124,58,237,.06),transparent)}
+.score-card.winner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple2),var(--purple3))}
+.score-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:7px}
+.winner-chip{font-family:var(--mono);font-size:7px;color:var(--purple3);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:2px 7px;letter-spacing:.06em}
+.score-num{font-family:var(--mono);font-size:44px;font-weight:700;line-height:1;letter-spacing:-.04em;margin-bottom:6px}
+.score-card.winner .score-num{color:var(--purple3)}
+.score-card:not(.winner) .score-num{color:var(--text3)}
+.score-bar-wrap{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;margin-bottom:10px}
+.score-bar{height:100%;border-radius:2px;transition:width 1.4s var(--ease)}
+.score-card.winner .score-bar{background:linear-gradient(90deg,var(--purple2),var(--purple3))}
+.score-card:not(.winner) .score-bar{background:var(--text3)}
+.score-note{font-size:10px;color:var(--text3);line-height:1.6}
+
+/* ── COMPARISON TABLE ── */
+.table-wrap{overflow-x:auto;margin-top:48px}
+table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+th{background:var(--bg3);padding:12px 18px;font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:.14em;text-transform:uppercase;text-align:left;border-bottom:1px solid var(--border)}
+th:not(:first-child){text-align:center}
+td{padding:13px 18px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text2)}
+tr:last-child td{border-bottom:none}
+td:not(:first-child){text-align:center}
+td.yapid-col{background:rgba(124,58,237,.03)}
+th.yapid-col{color:var(--purple3)}
+.ck2{color:var(--green2);font-size:14px}
+.x2{color:var(--red);font-size:14px}
+.pt{color:var(--amber);font-family:var(--mono);font-size:9px}
+
+/* ── HOW IT WORKS ── */
+.how-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:48px}
+.step{background:var(--bg);padding:32px;transition:background .2s}
+.step:hover{background:var(--bg2)}
+.step-num{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;margin-bottom:14px}
+.step-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:8px}
+.step-desc{font-size:12px;color:var(--text2);line-height:1.7}
+.step-code{font-family:var(--mono);font-size:10px;color:var(--purple3);background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:8px 10px;margin-top:12px;line-height:1.6}
+
+/* ── INTEGRATION ── */
+.int-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:48px}
+.code-win{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;overflow:hidden}
+.cw-head{background:var(--bg3);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:5px}
+.cw-dot{width:9px;height:9px;border-radius:50%}
+.cw-dot:nth-child(1){background:#ff5f57}
+.cw-dot:nth-child(2){background:#febc2e}
+.cw-dot:nth-child(3){background:#28c840}
+.cw-title{font-family:var(--mono);font-size:9px;color:var(--text3);margin-left:8px}
+.cw-body{padding:20px 22px;font-family:var(--mono);font-size:11px;line-height:2;overflow-x:auto}
+.ct{color:#88c0d0}.ca{color:#81a1c1}.cv{color:#a3be8c}.cc{color:#3a3a3a}.cf{color:#7dd3fc}.ck3{color:#86efac}
+
+.int-points{display:flex;flex-direction:column;gap:18px}
+.int-point{display:flex;gap:14px;align-items:flex-start}
+.int-num{width:26px;height:26px;border-radius:50%;border:1px solid var(--purple2);color:var(--purple3);font-family:var(--mono);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.int-point h4{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px}
+.int-point p{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* ── LICENSE ── */
+.lic-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.lic-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:48px}
+.lic-card{background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:28px}
+.lic-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid rgba(245,158,11,.25);border-radius:12px;background:rgba(245,158,11,.05);font-family:var(--mono);font-size:9px;color:var(--amber);margin-bottom:16px;letter-spacing:.06em}
+.lic-card h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:10px}
+.lic-card p{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:10px}
+.timeline{display:flex;flex-direction:column}
+.tl{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.tl:last-child{border-bottom:none}
+.tl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.tl-year{font-family:var(--mono);font-size:9px;color:var(--text3);min-width:36px;margin-top:2px}
+.tl-text{font-size:12px;color:var(--text2);line-height:1.6}
+.tl-text strong{color:var(--text)}
+
+/* ── DEMO ── */
+.demo-section{border-top:1px solid var(--border)}
+.demo-wrap{
+  margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:24px;
+  padding:56px;
+  background:repeating-conic-gradient(#0e0e0e 0% 25%,#0b0b0b 0% 50%) 0 0/22px 22px;
+  border-radius:12px;border:1px solid var(--border);
+}
+.demo-label{font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:.16em;text-transform:uppercase}
+#demo-result{display:none;background:var(--bg2);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:14px 18px;font-family:var(--mono);font-size:10px;color:var(--purple3);text-align:left;max-width:380px;width:100%;line-height:1.8}
+
+/* ── NPM ── */
+.npm-section{background:var(--bg2);border-top:1px solid var(--border)}
+.npm-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:40px}
+.npm-card{background:var(--bg);padding:28px}
+.npm-card-title{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.npm-card h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
+.npm-card p{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.npm-code{font-family:var(--mono);font-size:10px;color:var(--purple3);background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:8px 12px}
+
+/* ── CTA ── */
+.cta-section{text-align:center;padding:120px 48px;position:relative;overflow:hidden}
+.cta-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:350px;background:radial-gradient(ellipse,rgba(124,58,237,.07),transparent 70%);pointer-events:none}
+.cta-section h2{font-size:clamp(40px,6vw,72px);font-weight:800;letter-spacing:-.04em;line-height:.95;margin-bottom:20px;position:relative}
+.cta-section p{font-size:16px;color:var(--text2);margin-bottom:48px;position:relative}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-logo{display:flex;align-items:center;gap:8px}
+.foot-logo img{width:22px;height:22px;object-fit:contain}
+.foot-copy{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.06em}
+.foot-links{display:flex;gap:20px}
+.foot-links a{font-family:var(--mono);font-size:9px;color:var(--text3);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--text2)}
+
+@media(max-width:900px){
+  header{padding:0 20px}
+  nav{display:none}
+  section{padding:64px 20px}
+  .hero{padding:90px 20px 60px}
+  .problem-grid,.score-grid,.steps,.int-grid,.lic-grid,.npm-cards{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column}
+  .stat{border-right:none;border-bottom:1px solid var(--border)}
+  .stat:last-child{border-bottom:none}
+  footer{padding:32px 20px}
+  h1{font-size:52px}
+}
+
+/* ─── FOOTER (YAP style) ──────────────────────────────────── */
+.footer-wrap{max-width:1400px;margin:0 auto;padding:60px 48px 40px;border-top:1px solid var(--border)}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand{max-width:280px}
+.footer-brand p{font-size:13px;color:var(--text2);line-height:1.7;margin-top:14px}
+.footer-col h4{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+.footer-col a{display:block;font-size:13px;color:var(--text2);text-decoration:none;margin-bottom:10px;transition:color .2s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-copy{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em}
+.footer-social{display:flex;gap:16px}
+.footer-social a{font-size:15px;color:var(--text3);text-decoration:none;transition:color .2s}
+.footer-social a:hover{color:var(--text)}
+@media(max-width:900px){.footer-wrap{padding:40px 24px 28px}.footer-top{grid-template-columns:1fr 1fr;gap:28px}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">
+    <img src="/yapid.png" alt="YapID">
+  </a>
+  <nav>
+    <a href="#problem">Why YapID</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#how">How it works</a>
+    <a href="#integrate">Integrate</a>
+    <a href="#license">License</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:8px" id="hdr-btn-wrap">
+    <a href="/login" class="hdr-cta" id="hdr-login-btn">Sign in</a>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    The most private auth system ever built
+  </div>
+
+  <img src="/yapid.png" alt="YapID" class="hero-logo">
+
+  <h1>
+    <span class="line1">Identity without</span>
+    <span class="line2">identity.</span>
+  </h1>
+
+  <p class="hero-sub">No email. No password. No account. No tracking. 12 words gives your users a permanent anonymous identity that works everywhere — forever.</p>
+
+  <div class="hero-actions">
+    <a href="#demo" class="btn-primary">Try YapID now</a>
+    <a href="/integration" class="btn-ghost">Integration docs →</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-val">93%</span>
+      <span class="stat-lbl">Privacy Score</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">0</span>
+      <span class="stat-lbl">Data Stored</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">&lt;10min</span>
+      <span class="stat-lbl">Integration Time</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">1yr</span>
+      <span class="stat-lbl">Session Length</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEM ── -->
+<section class="problem-section" id="problem">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag">The Problem</div>
+      <h2 class="section-h">Every auth system<br>betrays your users.</h2>
+      <p class="section-sub">Traditional auth collects data it doesn't need. Email, IP addresses, device fingerprints, session metadata. All to answer one question: is this the same person?</p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-card bad">
+        <div class="tag red">✗ Traditional Auth</div>
+        <h3>What they collect</h3>
+        <ul class="problem-list">
+          <li><span class="x">✗</span> Email address</li>
+          <li><span class="x">✗</span> IP address logged</li>
+          <li><span class="x">✗</span> Device fingerprint</li>
+          <li><span class="x">✗</span> Session metadata</li>
+          <li><span class="x">✗</span> Third-party SDK tracking</li>
+          <li><span class="x">✗</span> Password (hashed, but still)</li>
+          <li><span class="x">✗</span> GDPR liability</li>
+        </ul>
+      </div>
+      <div class="problem-card">
+        <div class="tag green">✓ YapID</div>
+        <h3>What we collect</h3>
+        <ul class="problem-list">
+          <li><span class="ck">✓</span> SHA-256 hash of public key only</li>
+          <li><span class="ck">✓</span> No IP address ever stored</li>
+          <li><span class="ck">✓</span> No device data</li>
+          <li><span class="ck">✓</span> No metadata</li>
+          <li><span class="ck">✓</span> No third-party SDKs</li>
+          <li><span class="ck">✓</span> No password exists</li>
+          <li><span class="ck">✓</span> Nothing to delete for GDPR</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRIVACY SCORES ── -->
+<section id="privacy">
+  <div class="wrap">
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:0">
+      <div>
+        <div class="section-tag">Privacy Score</div>
+        <h2 class="section-h">We didn't just say we're private. We proved it.</h2>
+      </div>
+      <div>
+        <p class="section-sub">Scored across 7 criteria: data collection, IP logging, identity linkability, session encryption, third-party exposure, tracking, and replay protection.</p>
+      </div>
+    </div>
+
+    <div class="score-grid reveal">
+      <div class="score-card winner">
+        <div class="score-name">YapID <span class="winner-chip">BEST</span></div>
+        <div class="score-num">93%</div>
+        <div class="score-bar-wrap"><div class="score-bar" data-w="93" style="width:0%"></div></div>
+        <div class="score-note">Ed25519 + AES-256-GCM + zero IP logs + SHA-256 wallet hash. Mathematically unbreakable with 128-bit entropy.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-name">Wallet Connect</div>
+        <div class="score-num">67%</div>
+        <div class="score-bar-wrap"><div class="score-bar" data-w="67" style="width:0%"></div></div>
+        <div class="score-note">Good for crypto users but complex setup, on-chain identity exposure, and RPC call tracking.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-name">Auth0 / Clerk</div>
+        <div class="score-num">41%</div>
+        <div class="score-bar-wrap"><div class="score-bar" data-w="41" style="width:0%"></div></div>
+        <div class="score-note">Email required, IP logged, device fingerprinted, session metadata stored. GDPR compliant but still collects everything.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-name">Sign in with Google</div>
+        <div class="score-num">12%</div>
+        <div class="score-bar-wrap"><div class="score-bar" data-w="12" style="width:0%"></div></div>
+        <div class="score-note">Your real Google identity tied to every login. Tracks across all sites. Shares data with Google.</div>
+      </div>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="yapid-col">YapID</th>
+            <th>Auth0 / Clerk</th>
+            <th>Google</th>
+            <th>Wallet Connect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>No email required</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="x2">✗</span></td><td><span class="x2">✗</span></td><td><span class="ck2">✓</span></td></tr>
+          <tr><td>No IP stored</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="x2">✗</span></td><td><span class="x2">✗</span></td><td><span class="pt">~</span></td></tr>
+          <tr><td>Unlinakble identity</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="x2">✗</span></td><td><span class="x2">✗</span></td><td><span class="x2">✗</span></td></tr>
+          <tr><td>Client-side AES-256 encryption</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="x2">✗</span></td><td><span class="x2">✗</span></td><td><span class="pt">~</span></td></tr>
+          <tr><td>One script tag integration</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="x2">✗</span></td><td><span class="pt">~</span></td><td><span class="x2">✗</span></td></tr>
+          <tr><td>Works without backend</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="x2">✗</span></td><td><span class="x2">✗</span></td><td><span class="pt">~</span></td></tr>
+          <tr><td>No third-party tracking</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="x2">✗</span></td><td><span class="x2">✗</span></td><td><span class="pt">~</span></td></tr>
+          <tr><td>GDPR — nothing to delete</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="pt">~</span></td><td><span class="pt">~</span></td><td><span class="ck2">✓</span></td></tr>
+          <tr><td>Free forever</td><td class="yapid-col"><span class="ck2">✓</span></td><td><span class="pt">~ Free tier</span></td><td><span class="ck2">✓</span></td><td><span class="ck2">✓</span></td></tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:10px;font-weight:700;color:#fff">Privacy Score</td>
+            <td class="yapid-col" style="font-family:var(--mono);font-weight:700;color:var(--purple3)">93%</td>
+            <td style="font-family:var(--mono);color:var(--text3)">41%</td>
+            <td style="font-family:var(--mono);color:var(--text3)">12%</td>
+            <td style="font-family:var(--mono);color:var(--text3)">67%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how-section" id="how">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;margin-bottom:0">
+      <div class="section-tag" style="justify-content:center">How it works</div>
+      <h2 class="section-h" style="text-align:center">12 words. One click.<br>Permanent identity.</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01 — First visit</div>
+        <div class="step-title">Create in seconds</div>
+        <div class="step-desc">Click the button. 12 BIP-39 words are generated locally in your browser. Write them on paper. You're instantly logged in. No form, no email, no waiting.</div>
+        <div class="step-code">→ 12 words generated<br>→ Ed25519 keypair derived<br>→ Signature sent, not words</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02 — Return visits</div>
+        <div class="step-title">Auto-login for 1 year</div>
+        <div class="step-desc">Same browser? One click and you're in automatically. Encrypted session stored in IndexedDB with a non-extractable AES-256 key. Refresh tokens rotate silently.</div>
+        <div class="step-code">→ Access token: 1 hour<br>→ Refresh token: 1 year<br>→ Auto-renewed silently</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03 — New device</div>
+        <div class="step-title">12 words = everywhere</div>
+        <div class="step-desc">Enter your 12 words on any device, any browser, anywhere in the world. Same identity, instantly. Works across every site that uses YapID.</div>
+        <div class="step-code">→ Same words = same identity<br>→ Cross-platform ✓<br>→ Cross-site ✓</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04 — Security</div>
+        <div class="step-title">Mathematically secure</div>
+        <div class="step-desc">2^128 possible combinations. Even all computers on Earth combined cannot brute-force the 12 words. Ed25519 signatures are industry-standard cryptography.</div>
+        <div class="step-code">→ 128-bit entropy<br>→ Ed25519 cryptography<br>→ Unbreakable by design</div>
+      </div>
+      <div class="step">
+        <div class="step-num">05 — Server</div>
+        <div class="step-title">Zero knowledge</div>
+        <div class="step-desc">The server stores only a SHA-256 hash of your public key — not the key itself. No IP, no email, no name. A full database breach reveals absolutely nothing useful.</div>
+        <div class="step-code">→ Hash(PublicKey) only<br>→ No reversible data<br>→ Breach-proof by design</div>
+      </div>
+      <div class="step">
+        <div class="step-num">06 — Control</div>
+        <div class="step-title">You own your identity</div>
+        <div class="step-desc">Logout all devices instantly. Get notified of new logins. Your 12 words are your master key — no company, no server, no government can take your identity away.</div>
+        <div class="step-code">→ Logout all devices<br>→ Login notifications<br>→ Full user control</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEMO ── -->
+<section class="demo-section" id="demo">
+  <div class="wrap" style="text-align:center">
+    <div class="reveal">
+      <div class="section-tag" style="justify-content:center">Live Demo</div>
+      <h2 class="section-h" style="text-align:center">Try it yourself.</h2>
+      <p style="font-size:14px;color:var(--text2);margin-bottom:40px">Click the button. Create an account in 30 seconds. This is the exact experience your users will have.</p>
+    </div>
+    <div class="demo-wrap reveal">
+      <div class="demo-label">Interactive Demo</div>
+      <yapid-button theme="dark" size="large" text="Sign in with YapID" onlogin="onDemoLogin"></yapid-button>
+      <div id="demo-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTEGRATION ── -->
+<section id="integrate">
+  <div class="wrap">
+    <div class="int-grid reveal">
+      <div>
+        <div class="section-tag">For Developers</div>
+        <h2 class="section-h">One line.<br>Any platform.</h2>
+        <p class="section-sub" style="margin-bottom:32px">No backend required. No API key. No registration. Drop in one script tag and your users can sign in immediately.</p>
+
+        <div class="int-points">
+          <div class="int-point">
+            <div class="int-num">1</div>
+            <div>
+              <h4>Load the script</h4>
+              <p>One &lt;script&gt; tag. Works with vanilla JS, React, Vue, Next.js — everything.</p>
+            </div>
+          </div>
+          <div class="int-point">
+            <div class="int-num">2</div>
+            <div>
+              <h4>Add the button</h4>
+              <p>One HTML element. Fully styled, customizable theme and size.</p>
+            </div>
+          </div>
+          <div class="int-point">
+            <div class="int-num">3</div>
+            <div>
+              <h4>Handle the callback</h4>
+              <p>Get <code style="font-family:var(--mono);font-size:10px;background:var(--bg3);padding:1px 5px;border-radius:3px">accountId</code> and <code style="font-family:var(--mono);font-size:10px;background:var(--bg3);padding:1px 5px;border-radius:3px">isPremium</code>. Optionally verify on your backend.</p>
+            </div>
+          </div>
+          <div class="int-point">
+            <div class="int-num">4</div>
+            <div>
+              <h4>Or use npm</h4>
+              <p><code style="font-family:var(--mono);font-size:10px;background:var(--bg3);padding:1px 5px;border-radius:3px">npm install yapid-js</code> — full SDK with React hooks included.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="/integration" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;padding:10px 20px;border:1px solid var(--purple2);border-radius:8px;color:var(--purple3);font-family:var(--mono);font-size:10px;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(124,58,237,.1)'" onmouseout="this.style.background='none'">
+          Open Integration Builder →
+        </a>
+      </div>
+
+      <div class="code-win">
+        <div class="cw-head">
+          <div class="cw-dot"></div><div class="cw-dot"></div><div class="cw-dot"></div>
+          <span class="cw-title">your-page.html</span>
+        </div>
+        <div class="cw-body">
+<span class="cc">&lt;!-- 1. Load YapID --&gt;</span>
+<span class="ct">&lt;script</span>
+  <span class="ca">src</span>=<span class="cv">"https://id.yaphub.xyz/yapid-button.js"</span>
+<span class="ct">&gt;&lt;/script&gt;</span>
+
+<span class="cc">&lt;!-- 2. Add the button --&gt;</span>
+<span class="ct">&lt;yapid-button</span>
+  <span class="ca">theme</span>=<span class="cv">"dark"</span>
+  <span class="ca">onlogin</span>=<span class="cv">"onLogin"</span>
+<span class="ct">&gt;&lt;/yapid-button&gt;</span>
+
+<span class="cc">&lt;!-- 3. Handle login --&gt;</span>
+<span class="ct">&lt;script&gt;</span>
+<span class="ck3">function</span> <span class="cf">onLogin</span>(session) {
+  <span class="cc">// accountId, isPremium, profile</span>
+  console.<span class="cf">log</span>(<span class="cv">'Welcome'</span>, session.accountId);
+
+  <span class="cc">// Optional: verify on backend</span>
+  <span class="cf">fetch</span>(<span class="cv">'/login'</span>, {
+    method: <span class="cv">'POST'</span>,
+    body: JSON.<span class="cf">stringify</span>({
+      token: session.access_token
+    })
+  });
+}
+<span class="ct">&lt;/script&gt;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NPM PACKAGE ── -->
+<section class="npm-section">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag">npm Package</div>
+      <h2 class="section-h">yapid-js — now on npm</h2>
+      <p class="section-sub">Full SDK for JavaScript, Node.js, and React. One install, everything included.</p>
+    </div>
+    <div class="npm-cards reveal">
+      <div class="npm-card">
+        <div class="npm-card-title">Browser / Vanilla JS</div>
+        <h3>Client SDK</h3>
+        <p>Login, verify, refresh, logout. Full OAuth flow in a simple class.</p>
+        <div class="npm-code">import { YapID } from 'yapid-js'</div>
+      </div>
+      <div class="npm-card">
+        <div class="npm-card-title">Node.js / Backend</div>
+        <h3>Server SDK</h3>
+        <p>Verify tokens server-side. Express middleware included.</p>
+        <div class="npm-code">import { verifyToken } from 'yapid-js/server'</div>
+      </div>
+      <div class="npm-card">
+        <div class="npm-card-title">React</div>
+        <h3>React Hook</h3>
+        <p>useYapID() hook, YapIDProvider, and pre-built YapIDButton component.</p>
+        <div class="npm-code">import { useYapID } from 'yapid-js/react'</div>
+      </div>
+    </div>
+    <div style="margin-top:20px;text-align:center">
+      <a href="https://npmjs.com/package/yapid-js" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:10px;color:var(--text3);text-decoration:none;border-bottom:1px solid var(--border2);padding-bottom:2px;transition:color .2s" onmouseover="this.style.color='var(--text2)'" onmouseout="this.style.color='var(--text3)'">
+        npmjs.com/package/yapid-js →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── LICENSE ── -->
+<section class="lic-section" id="license">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag">Open Source + Protected</div>
+      <h2 class="section-h">Verify the code.<br>Trust the math.</h2>
+    </div>
+    <div class="lic-grid reveal">
+      <div class="lic-card">
+        <div class="lic-badge">⚖️ BSL 1.1 License</div>
+        <h3>Source available. Commercially protected.</h3>
+        <p>The full source code is on GitHub. Read it, audit it, verify our privacy claims yourself. No black boxes.</p>
+        <p>Competitors cannot copy and commercialize YapID for 4 years. After that, the license converts to Apache 2.0 — fully open source. Same model as Terraform, CockroachDB, and MariaDB.</p>
+        <a href="https://github.com/YapID" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid var(--border2);border-radius:6px;color:var(--text2);font-family:var(--mono);font-size:9px;text-decoration:none;margin-top:8px;transition:all .2s" onmouseover="this.style.borderColor='#fff';this.style.color='#fff'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">
+          ⬡ View on GitHub
+        </a>
+      </div>
+      <div>
+        <div class="timeline">
+          <div class="tl">
+            <div class="tl-dot" style="background:var(--purple3)"></div>
+            <div class="tl-year">2026</div>
+            <div class="tl-text"><strong>Launch</strong> — YapID goes live under BSL 1.1. Source public, competitors cannot copy.</div>
+          </div>
+          <div class="tl">
+            <div class="tl-dot" style="background:var(--purple3)"></div>
+            <div class="tl-year">2027</div>
+            <div class="tl-text"><strong>Growth</strong> — Integrations grow. Community audits the code. ZK-Proof upgrade ships.</div>
+          </div>
+          <div class="tl">
+            <div class="tl-dot" style="background:var(--purple3)"></div>
+            <div class="tl-year">2029</div>
+            <div class="tl-text"><strong>Expansion</strong> — Premium features, enterprise integrations, API ecosystem matures.</div>
+          </div>
+          <div class="tl">
+            <div class="tl-dot" style="background:var(--green2)"></div>
+            <div class="tl-year">2030</div>
+            <div class="tl-text"><strong>Apache 2.0</strong> — License converts automatically. Fully open source. The standard is set.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="cta-orb"></div>
+  <div class="wrap" style="position:relative">
+    <h2>The future of auth<br>is anonymous.</h2>
+    <p>Join the projects already using YapID. One script tag. Zero compromises.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="#demo" class="btn-primary">Try YapID free</a>
+      <a href="/integration" class="btn-ghost">Integration docs →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="YapID Home">
+          <img src="/yapid.png" alt="YapID" style="width:30px;height:30px;object-fit:contain;border-radius:6px">
+        </a>
+        <p>Anonymous persistent identity. No email, no password, no tracking. 12 words. Free forever.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/">Home</a>
+        <a href="/login">Sign In</a>
+        <a href="/profile">Profile</a>
+        <a href="/integration">Integration</a>
+        <a href="https://yaphub.xyz" target="_blank" rel="noopener">YAP Chat ↗</a>
+      </div>
+      <div class="footer-col">
+        <h4>Developers</h4>
+        <a href="https://yapid.gitbook.io/yapid-docs" target="_blank" rel="noopener">Documentation ↗</a>
+        <a href="https://yapid.gitbook.io/yapid-docs/docs/quickstart" target="_blank" rel="noopener">Quick Start ↗</a>
+        <a href="https://yapid.gitbook.io/yapid-docs/api/overview" target="_blank" rel="noopener">API Reference ↗</a>
+        <a href="https://npmjs.com/package/yapid-js" target="_blank" rel="noopener">npm Package ↗</a>
+        <a href="https://github.com/YapID" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal & Follow</h4>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="https://x.com/YapIDHub" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter" aria-hidden="true" style="margin-right:6px"></i>Twitter</a>
+        <a href="https://t.me/Tokiogaijin" target="_blank" rel="noopener"><i class="fa-brands fa-telegram" aria-hidden="true" style="margin-right:6px"></i>Telegram</a>
+        <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7" target="_blank" rel="noopener"><i class="fa-solid fa-comment" aria-hidden="true" style="margin-right:6px"></i>Support Chat</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 YapID &nbsp;&middot;&nbsp; ANONYMOUS IDENTITY &nbsp;&middot;&nbsp; BSL 1.1 LICENSE</span>
+      <div class="footer-social">
+        <a href="https://x.com/YapIDHub" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="https://t.me/Tokiogaijin" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa-brands fa-telegram" aria-hidden="true"></i></a>
+        <a href="https://github.com/YapID" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/yapid-button.js"></script>
+<script>
+(function() {
+  function mountHeaderBtn() {
+    if (!customElements.get('yapid-button')) { setTimeout(mountHeaderBtn, 100); return; }
+    var wrap = document.getElementById('hdr-btn-wrap');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    var btn = document.createElement('yapid-button');
+    btn.setAttribute('theme', 'dark');
+    btn.setAttribute('size', 'small');
+    btn.addEventListener('yapid:login', function() {
+      var profileLink = document.createElement('a');
+      profileLink.href = '/profile';
+      profileLink.className = 'hdr-cta';
+      profileLink.style.cssText = 'color:#a78bfa;border-color:rgba(124,58,237,.3);margin-left:8px';
+      profileLink.textContent = '● Profile';
+      wrap.insertBefore(profileLink, wrap.firstChild);
+    });
+    wrap.appendChild(btn);
+  }
+  mountHeaderBtn();
+})();
+</script>
+<script>
+window.onDemoLogin = function(session) {
+  var el = document.getElementById('demo-result');
+  el.style.display = 'block';
+  el.innerHTML =
+    '<span style="color:#22c55e">✓ Signed in successfully</span><br><br>' +
+    '<span style="color:#444">accountId: </span>' + (session.sub || session.accountId) + '<br>' +
+    '<span style="color:#444">isPremium: </span>' + (session.yapid_premium || session.isPremium) + '<br>' +
+    '<span style="color:#444">scope: </span>' + (session.scope || 'openid profile') + '<br>' +
+    '<span style="color:#444">expires_in: </span>' + session.expires_in + 's';
+};
+
+// Score bar animation
+var scoreObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.score-bar').forEach(function(bar) {
+        setTimeout(function() { bar.style.width = bar.dataset.w + '%'; }, 200);
+      });
+      scoreObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.score-grid').forEach(function(el) { scoreObs.observe(el); });
+
+// Reveal animations
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+</script>
+</body>
+</html>

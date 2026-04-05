@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /auth/
+Disallow: /api/
+Disallow: /session-check.html
+Disallow: /npm-test.html
+
+Sitemap: https://id.yaphub.xyz/sitemap.xml

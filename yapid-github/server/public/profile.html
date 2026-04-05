@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Account — YapID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--bg2:#101010;--bg3:#181818;
+  --border:#1e1e1e;--border2:#2a2a2a;
+  --text:#f0f0f0;--text2:#777;--text3:#3a3a3a;
+  --purple:#7c3aed;--purple2:#6d28d9;--purple3:#a78bfa;
+  --green:#22c55e;--red:#ef4444;--amber:#f59e0b;
+  --mono:'Space Mono',monospace;--sans:'Bricolage Grotesque',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;padding:20px}
+
+/* Header */
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:680px;margin:0 auto 36px;
+  padding-bottom:18px;border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo img{width:40px;height:40px;object-fit:contain}
+.hdr-links{display:flex;gap:14px}
+.hdr-link{font-family:var(--mono);font-size:10px;color:var(--text3);text-decoration:none;transition:color .15s}
+.hdr-link:hover{color:var(--text2)}
+
+/* Main */
+.main{max-width:680px;margin:0 auto}
+
+/* Card */
+.card{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-bottom:12px}
+.card-title{
+  font-family:var(--mono);font-size:9px;color:var(--text3);
+  letter-spacing:.16em;text-transform:uppercase;
+  margin-bottom:18px;display:flex;align-items:center;gap:8px;
+}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Account ID Row */
+.account-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.account-id-wrap{}
+.account-label{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.account-id{font-family:var(--mono);font-size:11px;color:var(--text2);word-break:break-all;line-height:1.6}
+.premium-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border:1px solid rgba(245,158,11,.3);border-radius:10px;background:rgba(245,158,11,.06);font-family:var(--mono);font-size:10px;color:var(--amber);white-space:nowrap;flex-shrink:0}
+.free-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border:1px solid var(--border2);border-radius:10px;font-family:var(--mono);font-size:10px;color:var(--text3);white-space:nowrap;flex-shrink:0}
+
+/* Sessions */
+.session-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 0;border-bottom:1px solid var(--border);
+  gap:12px;flex-wrap:wrap;
+}
+.session-item:last-child{border-bottom:none}
+.session-info{font-family:var(--mono);font-size:9px;color:var(--text2);line-height:1.8;min-width:0}
+.session-id{color:var(--text3);font-size:8px}
+.current-chip{
+  font-size:8px;color:var(--purple3);
+  border:1px solid rgba(124,58,237,.25);border-radius:6px;
+  padding:1px 7px;background:rgba(124,58,237,.06);
+  letter-spacing:.04em;white-space:nowrap;flex-shrink:0;
+}
+
+/* BIP39 Download */
+.bip-box{
+  background:var(--bg3);border:1px solid rgba(124,58,237,.2);
+  border-radius:8px;padding:16px;margin-bottom:14px;
+}
+.bip-title{font-family:var(--mono);font-size:10px;color:var(--purple3);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.bip-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.bip-input{
+  width:100%;background:var(--bg);border:1px solid var(--border2);
+  border-radius:6px;padding:9px 12px;font-family:var(--mono);font-size:11px;
+  color:var(--purple3);outline:none;margin-bottom:10px;
+  line-height:1.7;resize:none;
+}
+.bip-warn{
+  background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.15);
+  border-radius:6px;padding:9px 12px;font-size:11px;color:var(--amber);
+  line-height:1.6;margin-bottom:12px;display:flex;gap:6px;align-items:flex-start;
+}
+
+/* Buttons */
+.btn{
+  padding:9px 18px;border-radius:7px;font-family:var(--mono);font-size:10px;
+  font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:.04em;
+  display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+  white-space:nowrap;
+}
+.btn-p{background:#fff;color:#000;border:1px solid #fff}
+.btn-p:hover{background:transparent;color:#fff}
+.btn-p:disabled{opacity:.4;cursor:not-allowed}
+.btn-s{background:none;color:var(--text2);border:1px solid var(--border2)}
+.btn-s:hover{border-color:var(--text);color:var(--text)}
+.btn-danger{background:none;color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.btn-danger:hover{background:rgba(239,68,68,.07);border-color:var(--red)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+
+/* Status */
+.status{font-family:var(--mono);font-size:10px;margin-top:10px;min-height:14px}
+.status.ok{color:var(--green)}.status.err{color:var(--red)}.status.info{color:var(--text3)}
+
+/* Privacy Note */
+.privacy-note{
+  background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.12);
+  border-radius:8px;padding:14px 16px;
+  font-size:12px;color:var(--text2);line-height:1.75;
+}
+.privacy-note strong{color:var(--green)}
+
+/* Loading */
+.loading{text-align:center;padding:80px 20px;font-family:var(--mono);font-size:11px;color:var(--text3)}
+.spin{width:18px;height:18px;border:2px solid var(--border2);border-top-color:var(--purple3);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 14px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* Not logged in */
+.not-logged{text-align:center;padding:80px 20px}
+.not-logged h2{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+.not-logged p{font-size:13px;color:var(--text2);margin-bottom:24px}
+
+/* Responsive */
+@media(max-width:600px){
+  body{padding:14px}
+  .card{padding:18px}
+  header{margin-bottom:24px}
+  .account-row{flex-direction:column;align-items:flex-start}
+  .hdr-link{font-size:9px}
+  .btn{padding:8px 14px;font-size:9px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">
+    <img src="/yapid.png" alt="YapID">
+  </a>
+  <div class="hdr-links">
+    <a href="/" class="hdr-link">Home</a>
+    <a href="https://yaphub.xyz" class="hdr-link">YAP Chat</a>
+  </div>
+</header>
+
+<div class="main" id="main">
+  <div class="loading">
+    <div class="spin"></div>
+    Loading account...
+  </div>
+</div>
+
+<script type="module">
+const EP = 'https://id.yaphub.xyz';
+
+// ── IndexedDB ─────────────────────────────────────────────────
+async function dbOpen(){return new Promise((r,j)=>{const q=indexedDB.open('yapid-v1',1);q.onupgradeneeded=e=>e.target.result.createObjectStore('keys');q.onsuccess=e=>r(e.target.result);q.onerror=()=>j(q.error);});}
+async function dbGet(k){const d=await dbOpen();return new Promise((r,j)=>{const q=d.transaction('keys','readonly').objectStore('keys').get(k);q.onsuccess=()=>r(q.result??null);q.onerror=()=>j(q.error);});}
+async function dbDel(k){const d=await dbOpen();return new Promise((r,j)=>{const q=d.transaction('keys','readwrite').objectStore('keys').delete(k);q.onsuccess=()=>r();q.onerror=()=>j(q.error);});}
+
+async function getKey(){return await dbGet('enc-key');}
+async function dec(s){
+  const k=await getKey();
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:new Uint8Array(s.iv)},k,new Uint8Array(s.ct));
+  return new TextDecoder().decode(pt);
+}
+
+async function getToken(){
+  const stored=await dbGet('session');
+  if(!stored)return null;
+  try{return await dec(stored.encryptedToken);}catch{return null;}
+}
+
+// ── Init ──────────────────────────────────────────────────────
+async function init(){
+  const token = await getToken();
+  if(!token){showNotLoggedIn();return;}
+
+  const res = await fetch(EP+'/auth/verify',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({access_token:token,token})
+  });
+  if(!res.ok){showNotLoggedIn();return;}
+  const session = await res.json();
+  if(!session.valid){showNotLoggedIn();return;}
+
+  // Sessions laden
+  const sessRes = await fetch(EP+'/auth/sessions',{
+    headers:{Authorization:'Bearer '+token}
+  }).catch(()=>null);
+  const sessData = sessRes?.ok ? await sessRes.json() : {sessions:[]};
+
+  renderProfile(session, token, sessData.sessions||[]);
+}
+
+function showNotLoggedIn(){
+  document.getElementById('main').innerHTML = `
+    <div class="not-logged">
+      <h2>Not logged in</h2>
+      <p>Sign in with YapID to manage your account.</p>
+      <a href="/login?redirect=${encodeURIComponent(window.location.href)}" class="btn btn-p">Sign in with YapID</a>
+    </div>
+  `;
+}
+
+function renderProfile(session, token, sessions){
+  const id        = session.sub || session.accountId;
+  const isPremium = !!(session.yapid_premium || session.isPremium);
+
+  const sessionItems = sessions.length > 0
+    ? sessions.slice(0,10).map(s => `
+        <div class="session-item">
+          <div class="session-info">
+            <div class="session-id">${s.sessionId.slice(0,20)}...</div>
+            <div>Created ${new Date(s.createdAt).toLocaleDateString()} &nbsp;·&nbsp; Expires ${new Date(s.expiresAt).toLocaleDateString()}</div>
+          </div>
+          ${s.isCurrent ? '<span class="current-chip">● this device</span>' : ''}
+        </div>
+      `).join('')
+    : '<div style="font-family:var(--mono);font-size:10px;color:var(--text3);padding:10px 0">No sessions found</div>';
+
+  document.getElementById('main').innerHTML = `
+
+    <!-- Account Info -->
+    <div class="card">
+      <div class="card-title">Account</div>
+      <div class="account-row">
+        <div class="account-id-wrap">
+          <div class="account-label">YapID</div>
+          <div class="account-id">${id}</div>
+        </div>
+        ${isPremium
+          ? '<div class="premium-badge">★ Premium</div>'
+          : '<div class="free-badge">Free</div>'}
+      </div>
+      ${!isPremium ? `
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <div style="font-size:12px;color:var(--text2);margin-bottom:10px">
+            Upgrade to YAP Premium for exclusive features on YAP Chat and all connected platforms.
+          </div>
+          <a href="https://yaphub.xyz/premium" class="btn btn-s">★ Upgrade on YAP Chat →</a>
+        </div>
+      ` : ''}
+    </div>
+
+    <!-- BIP-39 Passphrase Download -->
+    <div class="card">
+      <div class="card-title">Passphrase Backup</div>
+      <div class="bip-box">
+        <div class="bip-title">Your 12-word BIP-39 Passphrase</div>
+        <div class="bip-desc">Enter your 12 words below to generate a secure backup file. The file is encrypted and can be stored safely.</div>
+        <div class="bip-warn">
+          <span></span>
+          <span>Only enter your words here on <strong>id.yaphub.xyz</strong>. Never enter them on any other site.</span>
+        </div>
+        <textarea class="bip-input" id="bip-words" rows="2" placeholder="word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+        <div class="btn-row" style="margin-top:0">
+          <button class="btn btn-p" onclick="downloadCard()">⬇ Download Backup Card</button>
+          <button class="btn btn-s" onclick="clearWords()">Clear</button>
+        </div>
+        <div class="status" id="status-bip"></div>
+      </div>
+      <div class="privacy-note">
+        <strong>✓ Your words never leave this page.</strong> The backup file is generated entirely in your browser. Nothing is sent to any server.
+      </div>
+    </div>
+
+    <!-- Sessions -->
+    <div class="card">
+      <div class="card-title">Active Sessions (${sessions.length})</div>
+      ${sessionItems}
+      <div class="btn-row">
+        <button class="btn btn-danger" onclick="logoutAll('${token}')">Logout from all devices</button>
+      </div>
+      <div class="status" id="status-sessions"></div>
+    </div>
+
+    <!-- Privacy Note -->
+    <div class="card">
+      <div class="card-title">Privacy</div>
+      <div class="privacy-note">
+        <strong>✓ Zero data shared.</strong> When you sign in to other websites with YapID, they only receive your anonymous <code style="font-family:var(--mono);font-size:10px;background:var(--bg3);padding:1px 5px;border-radius:3px">accountId</code>. No name, no avatar, no personal data — ever. Profile settings like display name and avatar are managed on <a href="https://yaphub.xyz/profile" style="color:var(--green);text-decoration:none">YAP Chat</a>.
+      </div>
+    </div>
+  `;
+}
+
+// ── BIP-39 Backup ─────────────────────────────────────────────
+window.clearWords = function(){
+  document.getElementById('bip-words').value = '';
+  document.getElementById('status-bip').textContent = '';
+};
+
+window.downloadCard = function(){
+  const words  = document.getElementById('bip-words').value.trim();
+  const status = document.getElementById('status-bip');
+
+  if(!words){
+    status.textContent = 'Enter your 12 words first';
+    status.className   = 'status err';
+    return;
+  }
+
+  const wordList = words.split(/\s+/).filter(Boolean);
+  if(wordList.length !== 12){
+    status.textContent = 'Please enter exactly 12 words (got '+wordList.length+')';
+    status.className   = 'status err';
+    return;
+  }
+
+  // Backup-Datei als Text generieren — alles im Browser
+  const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>YapID Backup Card</title><style>@page{size:A5;margin:0}*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Courier New',monospace;background:#fff;color:#000;padding:32px}.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #000}.title{font-size:18px;font-weight:bold}.subtitle{font-size:10px;color:#555;margin-top:2px}.date{font-size:10px;color:#777}.warn{background:#fffbea;border:1px solid #f0c000;border-radius:4px;padding:8px 12px;font-size:10px;line-height:1.6;margin-bottom:16px}.words{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px}.word{background:#f5f5f5;border:1px solid #ddd;border-radius:4px;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:6px}.word-num{font-size:9px;color:#999;min-width:16px}.word-text{font-weight:bold;letter-spacing:.04em}.footer{border-top:1px solid #ddd;padding-top:10px;font-size:9px;color:#777;display:flex;justify-content:space-between}.instructions{background:#f0f0f0;border-radius:4px;padding:8px 12px;font-size:10px;line-height:1.7;margin-bottom:12px}</style></head><body><div class="header"><div><div class="title">YapID Backup Card</div><div class="subtitle">Anonymous Identity — 12-Word Recovery Phrase</div></div><div class="date">${date}</div></div><div class="warn">⚠ Keep this card safe. Anyone with these 12 words has full access to your account. Never photograph or share.</div><div class="words">${wordList.map((w,i)=>'<div class="word"><span class="word-num">'+(i+1)+'.</span><span class="word-text">'+w+'</span></div>').join('')}</div><div class="instructions"><strong>How to use:</strong> Go to id.yaphub.xyz → Sign in → "Login with YapID" → Enter your 12 words in order.</div><div class="footer"><span>id.yaphub.xyz · Anonymous Identity</span><span>Generated in browser · Nothing sent to server</span></div><footer style="border-top:1px solid #1e1e1e;padding:32px 48px;background:#0e0e0e">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="/yapid.png" alt="YapID" style="width:32px;height:32px;object-fit:contain">
+      <span style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;letter-spacing:.06em">© 2026 YapID · BSL 1.1</span>
+    </div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">
+      <a href="/" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Home</a>
+      <a href="/integration" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Integration</a>
+      <a href="/profile" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Profile</a>
+      <a href="/privacy" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Privacy</a>
+      <a href="/terms" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Terms</a>
+      <a href="https://yapid.gitbook.io/yapid-docs" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Docs ↗</a>
+      <a href="https://github.com/YapID" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">GitHub ↗</a>
+      <a href="https://npmjs.com/package/yapid-js" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">npm ↗</a>
+      <a href="https://yaphub.xyz" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">YAP Chat ↗</a>
+      <a href="https://t.me/Tokiogaijin" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Telegram ↗</a>
+      <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#a78bfa;border:1px solid rgba(124,58,237,.25);border-radius:6px;padding:2px 10px;text-decoration:none">Support</a>
+    </div>
+  </div>
+</footer>
+</body></html>`;
+
+  const blob = new Blob([html], {type:'text/html'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'yapid-backup-card.html';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  // Wörter nach Download löschen
+  setTimeout(()=>{
+    document.getElementById('bip-words').value = '';
+    status.textContent = '✓ Downloaded — words cleared for security';
+    status.className   = 'status ok';
+  }, 500);
+};
+
+// ── Logout All ────────────────────────────────────────────────
+window.logoutAll = async function(token){
+  if(!confirm('Logout from all devices?\n\nYou will need your 12 words to sign back in on any device.'))return;
+  const status = document.getElementById('status-sessions');
+  status.textContent = 'Logging out all devices...';
+  status.className   = 'status info';
+
+  try{
+    await fetch(EP+'/auth/logout-all',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({access_token:token})
+    });
+    await dbDel('session');
+    status.textContent = '✓ All sessions ended — redirecting...';
+    status.className   = 'status ok';
+    setTimeout(()=>{ window.location.href='/'; }, 1200);
+  }catch(e){
+    status.textContent = '✗ Error: '+e.message;
+    status.className   = 'status err';
+  }
+};
+
+init();
+</script>
+<footer style="border-top:1px solid #1e1e1e;padding:32px 48px;background:#0e0e0e">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="/yapid.png" alt="YapID" style="width:32px;height:32px;object-fit:contain">
+      <span style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;letter-spacing:.06em">© 2026 YapID · BSL 1.1</span>
+    </div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">
+      <a href="/" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Home</a>
+      <a href="/integration" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Integration</a>
+      <a href="/profile" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Profile</a>
+      <a href="/privacy" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Privacy</a>
+      <a href="/terms" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Terms</a>
+      <a href="https://yapid.gitbook.io/yapid-docs" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Docs ↗</a>
+      <a href="https://github.com/YapID" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">GitHub ↗</a>
+      <a href="https://npmjs.com/package/yapid-js" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">npm ↗</a>
+      <a href="https://yaphub.xyz" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">YAP Chat ↗</a>
+      <a href="https://t.me/Tokiogaijin" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#3a3a3a;text-decoration:none">Telegram ↗</a>
+      <a href="https://chat.yaphub.xyz/AN5cc8kWdHwqZxwrG1Pwk6QFDmwMyip7" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:9px;color:#a78bfa;border:1px solid rgba(124,58,237,.25);border-radius:6px;padding:2px 10px;text-decoration:none">Support</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
